@@ -607,3 +607,56 @@ footer p { font-size: 0.65rem; color: var(--text-dim); letter-spacing: 0.1em; }
   .hero-title { font-size: 2.2rem; }
   #dashboard, #news { padding: 3rem 1.2rem; }
 }
+
+/* ─── MOON PHASE ─── */
+.moon-inner {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 0.5rem;
+}
+#moon-canvas { flex-shrink: 0; }
+.moon-phase-name {
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  font-weight: 300;
+  margin-bottom: 0.8rem;
+  letter-spacing: 0.05em;
+}
+.moon-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+}
+
+/* ─── TONIGHT'S SKY ─── */
+.tonight-list { display: flex; flex-direction: column; gap: 0.7rem; margin-top: 0.5rem; max-height: 300px; overflow-y: auto; }
+.tonight-item { display: flex; gap: 0.8rem; align-items: flex-start; padding-bottom: 0.7rem; border-bottom: 1px solid var(--border); }
+.tonight-item:last-child { border-bottom: none; }
+.tonight-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
+.tonight-name { font-size: 0.78rem; color: var(--text); display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2px; }
+.tonight-type { font-size: 0.58rem; letter-spacing: 0.12em; color: var(--text-dim); border: 1px solid var(--border); padding: 1px 5px; border-radius: 2px; }
+.tonight-desc { font-size: 0.7rem; color: var(--text-dim); line-height: 1.5; }
+
+/* ─── SATELLITE TRACKER ─── */
+.sat-buttons { display: flex; gap: 0.5rem; margin-bottom: 0.8rem; flex-wrap: wrap; }
+.sat-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  color: var(--text-dim);
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  padding: 0.3rem 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.sat-btn:hover { border-color: var(--sat-color, var(--accent)); color: var(--text); }
+.sat-btn.active { background: var(--sat-color, var(--accent)); border-color: var(--sat-color, var(--accent)); color: var(--bg); }
+.sat-tracker-map { border-radius: 4px; overflow: hidden; background: #06091a; margin-bottom: 0.8rem; }
+#sat-canvas { display: block; width: 100%; }
+.sat-detail-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem 1rem; }
+
+/* ─── CONSTELLATION MAP ─── */
+#constellation-canvas { display: block; }

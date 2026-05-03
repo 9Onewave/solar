@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   Dashboard.init();
   News.init();
   Search.init();
+  initExtras();
 
   // ── Nav active link on scroll ───────────────────────────
   const sections = document.querySelectorAll('section[id]');
