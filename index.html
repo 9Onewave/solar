@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>COSMOS — Explore the Universe</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <div class="nav-logo">COSMOS</div>
+    <div class="nav-links">
+      <a href="#solar-system" class="nav-link active">Solar System</a>
+      <a href="#dashboard" class="nav-link">Live Data</a>
+      <a href="#news" class="nav-link">Discovery</a>
+    </div>
+    <div class="nav-search">
+      <input type="text" id="global-search" placeholder="Search objects, planets, satellites…" autocomplete="off"/>
+      <div id="search-results" class="search-dropdown"></div>
+    </div>
+  </nav>
+
+  <!-- HERO — SOLAR SYSTEM -->
+  <section id="solar-system">
+    <canvas id="solar-canvas"></canvas>
+    <div class="hero-overlay">
+      <h1 class="hero-title">THE UNIVERSE<br><span>IS YOURS TO EXPLORE</span></h1>
+      <p class="hero-sub">Drag to rotate · Scroll to zoom · Click any object</p>
+    </div>
+    <!-- Planet info panel -->
+    <div id="planet-panel" class="side-panel hidden">
+      <button class="panel-close" onclick="closePanel()">✕</button>
+      <div class="panel-tag" id="panel-tag">PLANET</div>
+      <h2 id="panel-name">Earth</h2>
+      <div class="panel-stats" id="panel-stats"></div>
+      <p class="panel-desc" id="panel-desc"></p>
+    </div>
+    <div class="scroll-hint">↓ Live Data</div>
+  </section>
+
+  <!-- LIVE DASHBOARD -->
+  <section id="dashboard">
+    <div class="section-header">
+      <span class="section-tag">LIVE</span>
+      <h2>Real-Time Space Data</h2>
+      <div class="live-dot"></div>
+    </div>
+
+    <div class="dashboard-grid">
+
+      <!-- ISS Tracker -->
+      <div class="card card-wide" id="iss-card">
+        <div class="card-header">
+          <span class="card-label">INTERNATIONAL SPACE STATION</span>
+          <span class="card-badge live">LIVE</span>
+        </div>
+        <div class="iss-map-container">
+          <canvas id="iss-map"></canvas>
+          <div class="iss-marker" id="iss-marker">
+            <div class="iss-pulse"></div>
+            <div class="iss-dot"></div>
+          </div>
+        </div>
+        <div class="iss-stats">
+          <div class="stat-item">
+            <span class="stat-label">LATITUDE</span>
+            <span class="stat-value mono" id="iss-lat">—</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">LONGITUDE</span>
+            <span class="stat-value mono" id="iss-lon">—</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">ALTITUDE</span>
+            <span class="stat-value mono" id="iss-alt">408 km</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">VELOCITY</span>
+            <span class="stat-value mono">27,600 km/h</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Planet positions -->
+      <div class="card" id="planets-card">
+        <div class="card-header">
+          <span class="card-label">PLANET POSITIONS</span>
+          <span class="card-badge">TODAY</span>
+        </div>
+        <div class="planet-list" id="planet-list"></div>
+      </div>
+
+      <!-- Satellite count -->
+      <div class="card card-stat" id="sat-card">
+        <div class="card-label">TRACKED OBJECTS</div>
+        <div class="big-number" id="sat-count">—</div>
+        <div class="big-label">in Earth orbit</div>
+        <div class="sat-breakdown" id="sat-breakdown"></div>
+      </div>
+
+      <!-- Astronomy Picture of the Day -->
+      <div class="card card-apod" id="apod-card">
+        <div class="card-header">
+          <span class="card-label">NASA · PICTURE OF THE DAY</span>
+        </div>
+        <div class="apod-inner">
+          <img id="apod-img" src="" alt="APOD" />
+          <div class="apod-info">
+            <h3 id="apod-title">Loading…</h3>
+            <p id="apod-explanation"></p>
+            <span id="apod-date" class="apod-date"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Near Earth Objects -->
+      <div class="card" id="neo-card">
+        <div class="card-header">
+          <span class="card-label">NEAR-EARTH OBJECTS</span>
+          <span class="card-badge warn" id="neo-hazard">CHECKING…</span>
+        </div>
+        <div class="neo-list" id="neo-list">
+          <div class="loading-dots"><span></span><span></span><span></span></div>
+        </div>
+      </div>
+
+      <!-- Space Weather -->
+      <div class="card card-stat" id="spaceweather-card">
+        <div class="card-label">SOLAR ACTIVITY</div>
+        <div class="big-number" id="solar-flux">—</div>
+        <div class="big-label">solar flux index</div>
+        <div class="solar-desc" id="solar-desc">Fetching data…</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- NEWS & DISCOVERY -->
+  <section id="news">
+    <div class="section-header">
+      <span class="section-tag">DISCOVERY</span>
+      <h2>Latest From Space</h2>
+    </div>
+    <div class="news-search-bar">
+      <input type="text" id="news-search" placeholder="Search space news…" />
+      <div class="news-filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="NASA">NASA</button>
+        <button class="filter-btn" data-filter="SpaceX">SpaceX</button>
+        <button class="filter-btn" data-filter="Mars">Mars</button>
+        <button class="filter-btn" data-filter="Moon">Moon</button>
+        <button class="filter-btn" data-filter="Asteroid">Asteroid</button>
+      </div>
+    </div>
+    <div class="news-grid" id="news-grid">
+      <div class="loading-dots center"><span></span><span></span><span></span></div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">COSMOS</div>
+    <p>Data from NASA, Celestrak, Open Notify & SpaceFlightNews API</p>
+    <p class="footer-sub">Built with Three.js · Open source · GitHub Pages</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="js/solarSystem.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/news.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
